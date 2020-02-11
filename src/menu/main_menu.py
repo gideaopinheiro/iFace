@@ -1,13 +1,14 @@
 from Accounts.account import Account
 from .user_menu import UserMenu
+from data import db
 
 class MainMenu:
 
     def __init__(self):
         self.options = {1: self.createAccount, 2: self.showUsers, 3: self.login}
-        self.users = []
         self.execute()
     
+
     def execute(self):
         while True:
             self.displayMenu()
@@ -17,13 +18,15 @@ class MainMenu:
             else:
                 break
 
+
     def displayMenu(self):
         print("1: Criar Conta\n2: Mostrar Usuários\n3: Login")
     
+
     def createAccount(self):
-        newAccount = Account()
-        self.users.append(newAccount)
-        home = UserMenu(newAccount)
+        user = db.createUser()
+        account = db.createAccount(user)
+        home = UserMenu(account)
 
     
     def login(self):
@@ -33,11 +36,13 @@ class MainMenu:
         else:
             print("usuario nao encontrado")
     
+
     def getLoginInfo(self):
         nickName = input("nome de usuario: ")
         password = input("senha: ")
         return [nickName, password]
-        
+
+
     def authenticateUser(self, credential):
         for i in self.users:
             temp = i.getUser()
@@ -45,9 +50,11 @@ class MainMenu:
                 return True
         return False
     
+
     def showWellcomeMessage(self, user):
         print(f"Bem vindo(a), {user[0]}")
     
+
     def showUsers(self):
         for i in self.users:
             print(i)
