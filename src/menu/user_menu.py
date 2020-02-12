@@ -1,12 +1,13 @@
 from Accounts.account import Account
 from Users.user import User
+from data import db
+
 
 class UserMenu:
     
     def __init__(self, account: Account):
         self.account = account
-        self.friends = []
-        self.actions = {1: self.addFriend, 2: self.editProfile}
+        self.actions = {1: self.sendInvite, 2: self.editProfile, 3: self.resolveInvitations}
         self.execute()
 
     
@@ -20,14 +21,20 @@ class UserMenu:
                 break
     
 
-    def sendMessageTo(self):
-        who = input("Para quem deseja enviar uma mensagem? ")
-        for u in self.friends:
-            print(u)
+    # def sendMessageTo(self):
+    #     who = input("Para quem deseja enviar uma mensagem? ")
+    #     for u in self.friends:
+    #         print(u)
     
+    def resolveInvitations(self):
+        self.account.getUser().displayInvitations()
 
-    def addFriend(self, user: User):
-        self.friends.append(user)
+    def sendInvite(self):
+        nameUser = input("Quem você quer adicionar? ")
+        users = db.getUsers()
+        for i in  users:
+            if(i.getUserNickName() == nameUser):
+                i.invitation(self.account.getUser().getUserNickName())
     
 
     def showAccount(self):
@@ -40,7 +47,7 @@ class UserMenu:
         pass
 
     def showMenu(self):
-        print("1: Fazer uma amizade    2: Editar perfil    3: Enviar uma mensagem    4: Sair")
+        print("1: Enviar um convite    2: Editar perfil    3: Ver Convites")
     
 
     def getOption(self):
@@ -56,4 +63,3 @@ class UserMenu:
         user = self.account.getUser()
         user.editProfile()
     
-

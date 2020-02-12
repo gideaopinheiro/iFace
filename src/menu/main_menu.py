@@ -31,8 +31,10 @@ class MainMenu:
     
     def login(self):
         userInfo = self.getLoginInfo()
-        if self.authenticateUser(userInfo):
+        acc = self.authenticateUser(userInfo)
+        if acc:
             self.showWellcomeMessage(userInfo)
+            home = UserMenu(acc)
         else:
             print("usuario nao encontrado")
     
@@ -44,10 +46,11 @@ class MainMenu:
 
 
     def authenticateUser(self, credential):
-        for i in self.users:
-            temp = i.getUser()
-            if credential[0] == temp.getUserNickName() and credential[1] == temp.getPassword():
-                return True
+        accounts = db.getAccounts()
+        for acc in accounts:
+            user = acc.getUser()
+            if credential[0] == user.getUserNickName() and credential[1] == user.getPassword():
+                return acc
         return False
     
 

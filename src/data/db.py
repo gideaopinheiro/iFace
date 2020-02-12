@@ -19,6 +19,10 @@ def createUser():
 def createAccount(user: User):
     newAccount = Account(user)
     accounts.append(newAccount)
+    return newAccount
 
 def getUsers():
     return users
+
+def getAccounts():
+    return accounts
