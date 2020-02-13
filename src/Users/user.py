@@ -1,8 +1,11 @@
 
+from data import db
+from Accounts.account import Account
+
+
 class User:
     
-
-    def __init__(self, userName: str, password: str, nickName: str):
+    def __init__(self, userName, password, nickName):
         self.userName = userName
         self.password = password
         self.nickName = self.formatNickName(nickName)
@@ -14,43 +17,63 @@ class User:
         self.friends = []
         self.setProfile()
         self.displayInvitations()
-    
+
 
     def __str__(self):
        return f"{self.nickName}\n{self.age}\n{self.gender}\n{self.description}"
     
 
-    def invitation(self, user: str):
-        if user not in self.invitations:
+    def invitation(self, user: Account):
+        if user.getUser().getUserNickName() not in self.invitations:
             index = len(self.invitations) + 1
             self.invitations[index] = user
         else:
             return False
     
 
-    def acceptInvitation(self, index: int):
-        self.friends.append(self.invitations[index])
+    def acceptInvitation(self, acc: Account, index: int):
+        self.addFriend(acc)
+        print(f"Você e {self.invitations[index].getUser().getUserNickName()} são amigos a partir de agora!\n")
+        me = self.searchAccount(self.nickName)
+        if me:
+            acc.getUser().addFriend(me)
         del self.invitations[index]
-    
+
 
     def rejectInvitation(self, index: int):
         del self.invitations[index]
 
 
+    def addFriend(self, acc):
+        self.friends.append(acc)
+
+
     def displayInvitations(self):
         for i in list(self.invitations):
-            print(f"{i}: {self.invitations[i]}")
+            print(f"{i}: {self.invitations[i].getUser().getUserNickName()}")
             accept = int(input("0: Rejeitar    1: Aceitar\n-> "))
             if accept==1:
-                self.acceptInvitation(i)
+                self.acceptInvitation(self.invitations[i], i)
             elif accept==0:
                 self.rejectInvitation(i)
         if len(self.invitations) == 0:
             print("Não há convites no momento\n")
-                
     
 
-    def formatNickName(self, nickName):
+    def displayFriends(self):
+        for i in range(len(self.friends)):
+            print(f'{i+1}: {self.friends[i]}')
+
+
+    def searchAccount(self, nickName: str):
+        accounts = db.getAccounts()
+        for i in accounts:
+            if i.getUser().getUserNickName() == nickName:
+                return i
+        return False
+
+
+    def formatNickName(self, nickName: str):
         return nickName if nickName[0] == '@' else '@'+nickName
 
 
@@ -59,7 +82,7 @@ class User:
         self.nickName = "@"+newNickName
     
 
-    def changePassword(self, newPassword):
+    def changePassword(self, newPassword: str):
         self.password = newPassword
 
 
@@ -120,3 +143,4 @@ class User:
                 profileOptions[option]()
             else:
                 break
+

@@ -2,6 +2,8 @@ from Accounts.account import Account
 from .user_menu import UserMenu
 from data import db
 
+from .util import formatNickName
+
 class MainMenu:
 
     def __init__(self):
@@ -20,7 +22,7 @@ class MainMenu:
 
 
     def displayMenu(self):
-        print("1: Criar Conta\n2: Mostrar Usuários\n3: Login")
+        print("1: Criar Conta\n2: Mostrar Usuários\n3: Login\n4: Sair")
     
 
     def createAccount(self):
@@ -41,6 +43,7 @@ class MainMenu:
 
     def getLoginInfo(self):
         nickName = input("nome de usuario: ")
+        nickName = formatNickName(nickName)
         password = input("senha: ")
         return [nickName, password]
 
