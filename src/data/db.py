@@ -14,7 +14,6 @@ def createUser():
     nickName = input("Como deseja ser chamado? ")
 
     newUser = user.User(userName, password, nickName)
-    print(newUser)
     users.append(newUser)
     return newUser
 
@@ -25,10 +24,8 @@ def createAccount(user):
     return newAccount
 
 
-def createCommunity(owner, name, description):
-    newCommunity = Community(owner, name, description)
-    communities.append(newCommunity)
-    return newCommunity
+# def createCommunity(owner, name, description):
+    
 
 def getCommunities():
     return communities

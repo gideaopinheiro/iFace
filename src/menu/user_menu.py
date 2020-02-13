@@ -10,15 +10,42 @@ class UserMenu:
     
     def __init__(self, account: Account):
         self.account = account
-        self.actions = {1: self.sendInvite, 2: self.resolveInvitations, 3: self.editProfile, 4: self.showFriends, 5: self.communities }
+        self.actions = {1: self.sendInvite, 2: self.resolveInvitations, 3: self.editProfile, 4: self.showFriends, 5: self.communities, 6: self.sendMessage, 7: self.readMessagess }
         self.execute()
+
+
+    def execute(self):
+        while True:
+            self.showMenu()
+            option = self.getOption()
+            if option in range(1, len(self.actions) + 1):
+                self.actions[option]()
+            else:
+                break
+    
+	
+    def sendMessage(self):
+        nameUser = input("Para quem deseja enviar uma mensagem? ")
+        nameUser = formatNickName(nameUser)
+        users = self.account.getUser().getFriends()
+        for user in  users:
+            if(user.getUser().getUserNickName() == nameUser):
+                message = input("\nEscreva a sua mensagem abaixo e pressione Enter para enviar\n-> ")
+                user.getUser().sendMessage(user.getUser(), message)
+                break
+        print(f"\nVocê precisa tornar-se amigo de {nameUser} antes de enviar uma mensagem\n")
+    
+    def readMessagess(self):
+        messages = self.account.getUser().getMessages()
+        for i in messages:
+            print(f"{i[0]} disse: {i[1]}")
 
 
     def communities(self):
         while True:
             act = int(input("1: Mostrar comunidades    2: Criar comunidade    3: Voltar\n-> "))
             if act == 1:
-                myCommunities = db.getCommunities()
+                myCommunities = self.account.getUser().getCommunities()
                 for i in range(len(myCommunities)):
                     print(f"{i+1}: {myCommunities[i]}\n")
             elif act == 2:
@@ -31,17 +58,8 @@ class UserMenu:
     def createCommunity(self):
         communityName = input("Nome da comunidade: ")
         description = input(f"Faça uma pequena descrição sobre a {communityName}\n")
-        cmnt = db.createCommunity(self.account.getUser(), communityName, description)
+        cmnt = self.account.getUser().newCommunity(self.account.getUser(), communityName, description)
         CommunityMenu(cmnt, self.account.getUser())
-    
-    def execute(self):
-        while True:
-            self.showMenu()
-            option = self.getOption()
-            if option in range(1, len(self.actions) + 1):
-                self.actions[option]()
-            else:
-                break
     
     
     def resolveInvitations(self):
@@ -68,17 +86,13 @@ class UserMenu:
 
 
     def showMenu(self):
-        print("\n1: Enviar um convite    2: Ver Convites    3: Editar perfil    4: Ver amigos    5: Criar comunidade    6: Sair")
+        print("\n1: Enviar um convite    2: Ver Convites    3: Editar perfil    4: Ver amigos    5: Comunidades    6: Enviar Mensagem    7: Ver Mensagens    8: Sair")
     
 
     def getOption(self):
         option = int(input("-> "))
         return option
     
-
-    def addUser(self):
-        nameUser = input("Quem você quer adicionar? (Use o nome de usuário com '@') ")
-        
 
     def editProfile(self):
         user = self.account.getUser()

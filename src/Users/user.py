@@ -1,26 +1,50 @@
 
 from data import db
 from Accounts.account import Account
-
+from Communities.community import Community
+from menu.util import formatNickName
 
 class User:
     
     def __init__(self, userName, password, nickName):
         self.userName = userName
         self.password = password
-        self.nickName = self.formatNickName(nickName)
+        self.nickName = formatNickName(nickName)
         self.gender = 'Undefined'
         self.age = 'Undefined'
         self.description = ''
         self.chat = {}
         self.invitations = {}
         self.friends = []
+        self.communities = []
         self.setProfile()
         self.displayInvitations()
 
 
     def __str__(self):
        return f"{self.nickName}\n{self.age}\n{self.gender}\n{self.description}"
+    
+
+    def newCommunity(self, owner, name, description):
+        newCommunity = Community(owner, name, description)
+        self.communities.append(newCommunity)
+        return newCommunity
+
+
+    def getCommunities(self):
+        return self.communities
+
+
+    def addCommunity(self, community):
+        self.communities.append(community)
+
+
+    def sendMessage(self, user, message):
+        self.chat[user.getUserNickName()] = message
+    
+
+    def getMessages(self, user):
+        return self.chat
     
 
     def invitation(self, user: Account):
@@ -48,6 +72,10 @@ class User:
         self.friends.append(acc)
 
 
+    def getFriends(self):
+        return self.friends
+        
+
     def displayInvitations(self):
         for i in list(self.invitations):
             print(f"{i}: {self.invitations[i].getUser().getUserNickName()}")
@@ -71,10 +99,6 @@ class User:
             if i.getUser().getUserNickName() == nickName:
                 return i
         return False
-
-
-    def formatNickName(self, nickName: str):
-        return nickName if nickName[0] == '@' else '@'+nickName
 
 
     def setNickName(self):
@@ -137,7 +161,7 @@ class User:
     def editProfile(self):
         while True:
             profileOptions = {1: self.setNickName, 2: self.setAge, 3: self.setGender, 4: self.setDescription}
-            print(f"1) Nome de usuário: {self.nickName}\n2) Idade: {self.age}\n3) Sexo: {self.gender}\n4) Descrição: {self.description}\n")
+            print(f"1) Nome de usuário: {self.nickName}\n2) Idade: {self.age}\n3) Sexo: {self.gender}\n4) Descrição: {self.description}\n5: Sair")
             option = int(input("-> "))
             if option in range(1, len(profileOptions)+1):
                 profileOptions[option]()

@@ -2,12 +2,13 @@ from Accounts.account import Account
 from .user_menu import UserMenu
 from data import db
 
-from .util import formatNickName
+from .util import formatNickName, showWellcomeMessage
+
 
 class MainMenu:
 
     def __init__(self):
-        self.options = {1: self.createAccount, 2: self.showUsers, 3: self.login}
+        self.options = {1: self.createAccount, 2: self.login}
         self.execute()
     
 
@@ -22,7 +23,7 @@ class MainMenu:
 
 
     def displayMenu(self):
-        print("1: Criar Conta\n2: Mostrar Usuários\n3: Login\n4: Sair")
+        print("1: Criar Conta\n2: Login\n3: Sair")
     
 
     def createAccount(self):
@@ -33,10 +34,10 @@ class MainMenu:
     
     def login(self):
         userInfo = self.getLoginInfo()
-        acc = self.authenticateUser(userInfo)
-        if acc:
-            self.showWellcomeMessage(userInfo)
-            home = UserMenu(acc)
+        account = self.authenticateUser(userInfo)
+        if account:
+            print(f"Bem vindo(a) {userInfo[0]}")
+            home = UserMenu(account)
         else:
             print("usuario nao encontrado")
     
@@ -56,11 +57,4 @@ class MainMenu:
                 return acc
         return False
     
-
-    def showWellcomeMessage(self, user):
-        print(f"Bem vindo(a), {user[0]}")
     
-
-    def showUsers(self):
-        for i in self.users:
-            print(i)
