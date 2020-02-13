@@ -31,14 +31,14 @@ class UserMenu:
         for user in  users:
             if(user.getUser().getUserNickName() == nameUser):
                 message = input("\nEscreva a sua mensagem abaixo e pressione Enter para enviar\n-> ")
-                user.getUser().sendMessage(user.getUser(), message)
-                break
+                user.getUser().sendMessage(self.account.getUser(), message)
+                return True
         print(f"\nVocê precisa tornar-se amigo de {nameUser} antes de enviar uma mensagem\n")
     
     def readMessagess(self):
         messages = self.account.getUser().getMessages()
         for i in messages:
-            print(f"{i[0]} disse: {i[1]}")
+            print(f"{i} disse: {messages[i]}")
 
 
     def communities(self):
@@ -52,7 +52,6 @@ class UserMenu:
                 self.createCommunity()
             else:
                 break
-
 
 
     def createCommunity(self):

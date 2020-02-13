@@ -43,7 +43,7 @@ class User:
         self.chat[user.getUserNickName()] = message
     
 
-    def getMessages(self, user):
+    def getMessages(self):
         return self.chat
     
 
@@ -74,7 +74,7 @@ class User:
 
     def getFriends(self):
         return self.friends
-        
+
 
     def displayInvitations(self):
         for i in list(self.invitations):
