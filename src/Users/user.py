@@ -22,7 +22,7 @@ class User:
 
 
     def __str__(self):
-       return f"{self.nickName}\n{self.age}\n{self.gender}\n{self.description}"
+       return f"usuário: {self.nickName}\ndescrição: {self.description}"
     
 
     def newCommunity(self, owner, name, description):

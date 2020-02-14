@@ -46,8 +46,14 @@ class UserMenu:
             act = int(input("1: Mostrar comunidades    2: Criar comunidade    3: Voltar\n-> "))
             if act == 1:
                 myCommunities = self.account.getUser().getCommunities()
-                for i in range(len(myCommunities)):
-                    print(f"{i+1}: {myCommunities[i]}\n")
+                if len(myCommunities) > 0:
+                    for i in range(len(myCommunities)):
+                        print(f"{i+1}: {myCommunities[i]}\n")
+                    cmnt = int(input("Entrar na comunidade: "))
+                    if cmnt in range(1, len(myCommunities)+1):
+                        CommunityMenu(myCommunities[cmnt-1], self.account.getUser())
+                else:
+                    print("Você não participa de nenhuma comunidade ainda")
             elif act == 2:
                 self.createCommunity()
             else:
@@ -96,4 +102,3 @@ class UserMenu:
     def editProfile(self):
         user = self.account.getUser()
         user.editProfile()
-    

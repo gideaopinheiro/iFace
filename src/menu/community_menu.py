@@ -35,13 +35,13 @@ class CommunityMenu:
     def addMember(self):
         if self.me.getUserNickName() == self.owner.getUserNickName():
             userName = input("Quem você deseja adicionar? ")
-            users = db.getUsers()
-            for user in users:
-                if user.getUserNickName() == userName:
-                    self.community.addMember(user)
-                    user.addCommunity(self.community)
+            accounts = self.me.getFriends()
+            for account in accounts:
+                if account.getUser().getUserNickName() == userName:
+                    self.community.addMember(account.getUser())
+                    account.getUser().addCommunity(self.community)
                     return True
-            print("Usuário não existe")
+            print("Usuário não encontrado, certifique-se de que vocês já são amigos(as)")
         else:
             print("Somente o administrador pode executar esta ação!")
 
