@@ -118,16 +118,6 @@ class User:
         return self.password
     
 
-    def setGender(self):
-        genderOption = input("GÊNERO\nM: Masculino    F: Feminino    X: Prefino não informar\n").capitalize()
-        if genderOption == 'M':
-            self.gender = "M"
-        elif genderOption == 'F':
-            self.gender = "F"
-        elif genderOption == 'X':
-            self.gender = "Não informado"
-    
-
     def getGender(self):
         return self.gender
     
@@ -139,13 +129,25 @@ class User:
             self.age = userAge
 
 
-    def getAge(self):
-        return self.age
+    def setGender(self):
+        genderOption = input("GÊNERO\nM: Masculino    F: Feminino    X: Prefino não informar\n").capitalize()
+        if genderOption == 'M':
+            self.gender = "M"
+        elif genderOption == 'F':
+            self.gender = "F"
+        elif genderOption == 'X':
+            self.gender = "Não informado"
 
 
     def setDescription(self):
         descp = input("DESCRIÇÃO\nFala um pouco sobre você:\n")
         self.description = descp 
+
+
+    def getAge(self):
+        return self.age
+
+
 
 
     def getDescription(self):

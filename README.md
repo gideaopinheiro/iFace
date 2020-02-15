@@ -10,3 +10,14 @@ Os usuários que se inscrevem são armazenados no array ``` members[] ``` pelo m
 Quando uma nova mensagem é enviada, o método ``` newMessage() ``` envia a nova mensagem para todos os membros da comunidade.
 
 ![atualizandoObservers](https://github.com/gideaopinheiro/iFace/blob/master/imgs/atualizandoObservers.png)
+
+
+**Padrão Template Method**
+
+Foi implementado o padrão Template Method para definir o "esqueleto" do método ```setProfile()``` para que as subclasses possam implementá-lo fazendo as alterações necessárias.
+
+![templateMethod](https://github.com/gideaopinheiro/iFace/blob/master/imgs/templateMethod.png)
+
+Abaixo segue a implementação destes métodos.
+
+![métodos](https://github.com/gideaopinheiro/iFace/blob/master/imgs/implementando.png)
