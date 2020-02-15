@@ -14,16 +14,20 @@ class UserMenu:
         self.execute()
 
 
-    def execute(self):
+    def execute(self) -> None:
         while True:
-            self.showMenu()
+            self.displayMenu()
             option = self.getOption()
             if option in range(1, len(self.actions) + 1):
                 self.actions[option]()
             else:
                 break
     
+
+    def displayMenu(self) -> None:
+        print("\n1: Enviar um convite    2: Ver Convites    3: Editar perfil    4: Ver amigos    5: Comunidades    6: Enviar Mensagem    7: Ver Mensagens    8: Sair")
 	
+
     def sendMessage(self):
         nameUser = input("Para quem deseja enviar uma mensagem? ")
         nameUser = formatNickName(nameUser)
@@ -35,6 +39,7 @@ class UserMenu:
                 return True
         print(f"\nVocê precisa tornar-se amigo de {nameUser} antes de enviar uma mensagem\n")
     
+
     def readMessagess(self):
         messages = self.account.getUser().getMessages()
         for i in messages:
@@ -88,10 +93,6 @@ class UserMenu:
 
     def showFriends(self):
         self.account.getUser().displayFriends()
-
-
-    def showMenu(self):
-        print("\n1: Enviar um convite    2: Ver Convites    3: Editar perfil    4: Ver amigos    5: Comunidades    6: Enviar Mensagem    7: Ver Mensagens    8: Sair")
     
 
     def getOption(self):

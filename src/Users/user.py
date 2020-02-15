@@ -1,8 +1,8 @@
-
 from data import db
 from Accounts.account import Account
 from Communities.community import Community
 from menu.util import formatNickName
+
 
 class User:
     

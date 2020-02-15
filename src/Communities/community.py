@@ -6,7 +6,6 @@ class Community:
         self.name = name
         self.description = description
         self.members = []
-        self.messages = []
 
 
     def __str__(self):
@@ -39,12 +38,9 @@ class Community:
                 del self.members[i]
     
 
-    def sendMessage(self, user, message):
-        self.messages.append([user.getUserNickName(), message])
-    
-    
-    def getMessages(self):
-        return self.messages
+    def newMessage(self, user, message):
+        for member in self.members:
+            member.sendMessage(user, message)
     
 
     def displayMembers(self):

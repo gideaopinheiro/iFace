@@ -22,9 +22,6 @@ def createAccount(user):
     newAccount = Account(user)
     accounts.append(newAccount)
     return newAccount
-
-
-# def createCommunity(owner, name, description):
     
 
 def getCommunities():

@@ -13,9 +13,10 @@ class CommunityMenu:
         self.execute()
 
 
-    def execute(self):
+    def execute(self) -> None:
+        self.readMessages()
         while True:
-            self.showMenu()
+            self.displayMenu()
             act = int(input("-> "))
             if act in range(1, len(self.options)+1):
                 self.options[act]()
@@ -27,7 +28,7 @@ class CommunityMenu:
         self.community.displayMembers()
 
 
-    def showMenu(self):
+    def displayMenu(self) -> None:
         print(f"Bem vindo a comunidade {self.community.getName()}")
         print("\n1: Ver membros    2: Adicionar um membro    3: Remover um membro    4: Enviar mensagem para a comunidade    5: Ler mensagens    6: Voltar")
     
@@ -56,12 +57,12 @@ class CommunityMenu:
 
     def sendMessage(self):
         message = input("Escreva a sua mensagem abaixo e pressione Enter para enviar\n-> ")
-        self.community.sendMessage(self.me, message)
+        self.community.newMessage(self.me, message)
 		
     
 
     def readMessages(self):
-        messages = self.community.getMessages()
+        messages = self.me.getMessages()
         for i in messages:
             print(f"{i[0]} disse: {i[1]}")
 
